@@ -1,7 +1,15 @@
 package com.nameserver.remoting.excpetion;
 
-/**
- * Created by liubotao on 15/8/11.
- */
-public class RemotingSendRequestException {
+
+public class RemotingSendRequestException extends RemotingException {
+
+    private static final long serialVersionUID = 5391285827332471674L;
+
+    public RemotingSendRequestException(String addr) {
+        this(addr, null);
+    }
+
+    public RemotingSendRequestException(String addr, Throwable cause) {
+        super("send request to <" + addr + "> failed", cause);
+    }
 }
