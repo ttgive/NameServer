@@ -1,7 +1,10 @@
 package com.nameserver;
 
-/**
- * Created by liubotao on 15/8/11.
- */
+
 public class Server {
+
+    //启动应用
+    public static void main() {
+
+    }
 }
