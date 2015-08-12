@@ -97,8 +97,6 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
     }
 
     class NettyConnectManageHandler extends ChannelDuplexHandler {
-
-
         @Override
         public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress, SocketAddress localAddress, ChannelPromise future) throws Exception {
             final String local = (localAddress == null ? "UNKNOW" : localAddress.toString());
@@ -273,17 +271,13 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
     public void shutdown() {
         try {
             this.timer.cancel();
-
             for (ChannelWrapper channelWrapper : this.channelTables.values()) {
                 this.closeChannel(null, channelWrapper.getChannel());
             }
-
             this.channelTables.clear();
-
             if (this.nettyEventExecuter != null) {
                 this.nettyEventExecuter.shutdown();
             }
-
             if (this.defaultEventExecutorGroup != null) {
                 this.defaultEventExecutorGroup.shutdownGracefully();
             }
@@ -332,7 +326,6 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                         return channelWrapper.getChannel();
                     }
                 }
-
                 if (addrList != null && !addrList.isEmpty()) {
                     for (int i = 0; i < addrList.size(); i++) {
                         int index = this.namesrvIndex.incrementAndGet();
@@ -608,7 +601,6 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
     public void updateNameServerddressList(List<String> addrs) {
         List<String> old = this.namesrvAddrList.get();
         boolean update = false;
-
         if (!addrs.isEmpty()) {
             if (old == null) {
                 update = true;
@@ -626,7 +618,6 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                 Collections.shuffle(addrs);
                 this.namesrvAddrList.set(addrs);
             }
-
         }
     }
 
