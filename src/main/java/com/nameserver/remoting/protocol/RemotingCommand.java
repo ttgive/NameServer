@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RemotingCommand {
+
     public static String RemotingVersionKey = "nameserver.remoting.version";
     private static volatile int ConfigVersion = -1;
     private static AtomicInteger RequestId = new AtomicInteger(0);
