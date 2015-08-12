@@ -312,6 +312,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
 
         return this.createChannel(addr);
     }
+
     private Channel getAndCreateNameserverChannel() throws InterruptedException {
         String addr = this.namesrvAddrChoosed.get();
         if (addr != null) {
@@ -333,7 +334,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                 }
 
                 if (addrList != null && !addrList.isEmpty()) {
-                    for (int i= 0; i < addrList.size(); i++) {
+                    for (int i = 0; i < addrList.size(); i++) {
                         int index = this.namesrvIndex.incrementAndGet();
                         index = Math.abs(index);
                         index = index % addrList.size();
@@ -347,7 +348,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                     }
                 }
             } catch (Exception e) {
-                logger.error("getAndCreatenameserverChannel : create name server channel exception",e);
+                logger.error("getAndCreatenameserverChannel : create name server channel exception", e);
             } finally {
                 this.lockNamesrvChannel.unlock();
             }
@@ -358,7 +359,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
         return null;
     }
 
-    private Channel createChannel(final String addr) throws  InterruptedException {
+    private Channel createChannel(final String addr) throws InterruptedException {
 
         ChannelWrapper channelWrapper = this.channelTables.get(addr);
         if (channelWrapper != null && channelWrapper.isOK()) {
@@ -390,7 +391,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                     channelWrapper = new ChannelWrapper(channelFuture);
                     this.channelTables.put(addr, channelWrapper);
                 }
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 logger.error("createChannel : create channel excpetion", e);
             } finally {
                 this.lockChannelTables.unlock();
@@ -408,9 +409,9 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                     return channelWrapper.getChannel();
                 } else {
                     logger.warn("createChannel : connect host [" + addr + "] failed" +
-                    channelFuture.toString(), channelFuture.cause());
+                            channelFuture.toString(), channelFuture.cause());
                 }
-            }else {
+            } else {
                 logger.warn("createChannel : connect remote host[{}] timeout {}ms, {}",
                         addr, this.nettyClientConfig.getConnectTimeoutMillis(), channelFuture.toString());
             }
@@ -429,7 +430,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
         try {
             if (this.lockChannelTables.tryLock(LockTimeoutMillis, TimeUnit.MILLISECONDS)) {
                 try {
-                   boolean removeItemFromTable = true;
+                    boolean removeItemFromTable = true;
                     final ChannelWrapper preChannelWrapper = this.channelTables.get(remoteAddr);
 
                     logger.info("closeChannel: begin close the channel[{}] Found: {}", remoteAddr, (preChannelWrapper != null));
@@ -452,7 +453,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                     }
 
                     RemotingUtil.closeChannel(channel);
-                } catch (Exception e)  {
+                } catch (Exception e) {
                     logger.error("closeChannel : close the channel exception", e);
                 } finally {
                     this.lockChannelTables.unlock();
@@ -498,19 +499,15 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                         logger.info("closeChannel: the channel[{}] was removed from channel table", addrRemote);
                         RemotingUtil.closeChannel(channel);
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     logger.error("closeChannel: close the channel exception", e);
-                }
-                finally {
+                } finally {
                     this.lockChannelTables.unlock();
                 }
-            }
-            else {
+            } else {
                 logger.warn("closeChannel: try to lock channel table, but timeout, {}ms", LockTimeoutMillis);
             }
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             logger.error("closeChannel exception", e);
         }
     }
@@ -547,14 +544,14 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
             } catch (RemotingSendRequestException e) {
                 logger.warn("invokeSync : send request exception, so close the channel [{}]", addr);
                 this.closeChannel(addr, channel);
-                throw  e;
+                throw e;
             } catch (RemotingTimeoutException e) {
                 logger.warn("invokeSync:wait response timeout exception, the channel [{}]", addr);
                 throw e;
             }
         } else {
             this.closeChannel(addr, channel);
-            throw  new RemotingConnectException(addr);
+            throw new RemotingConnectException(addr);
         }
 
     }
