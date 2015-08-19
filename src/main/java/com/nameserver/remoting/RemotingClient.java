@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 
 public interface RemotingClient extends RemotingService {
 
-    public void updateNameServerddressList(final List<String> addrs);
+    public void updateNameServerAddressList(final List<String> addrs);
 
     public List<String> getNameServerAddressList();
 
