@@ -73,6 +73,13 @@ public class NamesrvController {
                 this.remotingExecutor);
     }
 
+    public void shutdown() {
+        this.remotingServer.shutdown();
+        this.remotingExecutor.shutdown();
+        this.scheduledExecutorService.shutdown();
+    }
+
+
     public void start() {
         this.remotingServer.start();
     }
