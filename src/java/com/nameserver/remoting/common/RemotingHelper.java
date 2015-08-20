@@ -1,7 +1,6 @@
 package com.nameserver.remoting.common;
 
 
-
 import io.netty.channel.Channel;
 
 import java.net.InetSocketAddress;

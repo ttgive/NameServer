@@ -75,7 +75,7 @@ public class KVConfigManager {
     }
 
     public void deleteKVConfig(final String namespace, final String key) {
-        try{
+        try {
             this.lock.writeLock().lockInterruptibly();
             try {
                 HashMap<String, String> kvTable = this.configTable.get(namespace);
@@ -141,7 +141,7 @@ public class KVConfigManager {
                 if (kvTable != null) {
                     StringBuilder sb = new StringBuilder();
                     String splitor = "";
-                    for(Map.Entry<String, String> entry : kvTable.entrySet()) {
+                    for (Map.Entry<String, String> entry : kvTable.entrySet()) {
                         if (value.equals(entry.getValue())) {
                             sb.append(splitor).append(entry.getKey());
                         }
@@ -166,7 +166,7 @@ public class KVConfigManager {
                 HashMap<String, String> kvTable = this.configTable.get(namespace);
                 if (kvTable != null) {
                     HashMap<String, String> cloneKvTable = new HashMap<String, String>(kvTable);
-                    for (Map.Entry<String, String > entry : cloneKvTable.entrySet()) {
+                    for (Map.Entry<String, String> entry : cloneKvTable.entrySet()) {
                         if (value.equals(entry.getValue())) {
                             kvTable.remove(entry.getKey());
                         }

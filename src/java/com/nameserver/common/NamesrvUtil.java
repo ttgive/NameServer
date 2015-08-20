@@ -11,6 +11,11 @@ import org.slf4j.Logger;
 
 public class NamesrvUtil {
 
+    public static final String NAMESPACE_ORDER_TOPIC_CONFIG = "ORDER_TOPIC_CONFIG";
+    public static final String NAMESPACE_PROJECT_CONFIG = "PROJECT_CONFIG";
+
+    public static final long MASTER_ID = 0L;
+
     public static void printObjectProperties(final Logger log, final Object object) {
         printObjectProperties(log, object, false);
     }
@@ -30,11 +35,9 @@ public class NamesrvUtil {
                         if (null == value) {
                             value = "";
                         }
-                    }
-                    catch (IllegalArgumentException e) {
+                    } catch (IllegalArgumentException e) {
                         System.out.println(e);
-                    }
-                    catch (IllegalAccessException e) {
+                    } catch (IllegalAccessException e) {
                         System.out.println(e);
                     }
 
@@ -47,8 +50,7 @@ public class NamesrvUtil {
 
                     if (log != null) {
                         log.info(name + "=" + value);
-                    }
-                    else {
+                    } else {
                         System.out.println(name + "=" + value);
                     }
                 }
@@ -74,27 +76,21 @@ public class NamesrvUtil {
                             Object arg = null;
                             if (cn.equals("int")) {
                                 arg = Integer.parseInt(property);
-                            }
-                            else if (cn.equals("long")) {
+                            } else if (cn.equals("long")) {
                                 arg = Long.parseLong(property);
-                            }
-                            else if (cn.equals("double")) {
+                            } else if (cn.equals("double")) {
                                 arg = Double.parseDouble(property);
-                            }
-                            else if (cn.equals("boolean")) {
+                            } else if (cn.equals("boolean")) {
                                 arg = Boolean.parseBoolean(property);
-                            }
-                            else if (cn.equals("String")) {
+                            } else if (cn.equals("String")) {
                                 arg = property;
-                            }
-                            else {
+                            } else {
                                 continue;
                             }
-                            method.invoke(object, new Object[] { arg });
+                            method.invoke(object, new Object[]{arg});
                         }
                     }
-                }
-                catch (Throwable e) {
+                } catch (Throwable e) {
                 }
             }
         }

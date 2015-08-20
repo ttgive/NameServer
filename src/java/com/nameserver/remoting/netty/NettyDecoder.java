@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 
 
-
 public class NettyDecoder extends LengthFieldBasedFrameDecoder {
 
     private static final Logger logger = LoggerFactory.getLogger(NettyDecoder.class);
@@ -38,7 +37,7 @@ public class NettyDecoder extends LengthFieldBasedFrameDecoder {
             return RemotingCommand.decode(byteBuffer);
         } catch (Exception e) {
             logger.error("decode exception , " + RemotingHelper.parseChannelRemoteAddr(ctx.channel()), e);
-        }  finally {
+        } finally {
             if (frame != null) {
                 frame.release();
             }

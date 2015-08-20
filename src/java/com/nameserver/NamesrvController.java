@@ -1,10 +1,12 @@
 package com.nameserver;
 
+import com.nameserver.common.ThreadFactoryImpl;
 import com.nameserver.kvconfig.KVConfigManager;
 import com.nameserver.processor.DefaultRequestProcessor;
 import com.nameserver.remoting.RemotingServer;
 import com.nameserver.remoting.netty.NettyRemotingServer;
 import com.nameserver.remoting.netty.NettyServerConfig;
+import com.nameserver.routeinfo.BrokerHousekeepingService;
 import com.nameserver.routeinfo.RouteInfoManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,7 @@ public class NamesrvController {
 
     private RemotingServer remotingServer;
 
-    private BrokderHouseKeepingService brokderHouseKeepingService;
+    private BrokerHousekeepingService brokerHousekeepingService;
 
     private ExecutorService remotingExecutor;
 
@@ -36,13 +38,13 @@ public class NamesrvController {
         this.nettyServerConfig = nettyServerConfig;
         this.kvConfigManager = new KVConfigManager(this);
         this.routeInfoManager = new RouteInfoManager();
-        this.brokderHouseKeepingService = new BrokderHouseKeeping(this);
+        this.brokerHousekeepingService = new BrokerHousekeepingService(this);
     }
 
     public boolean initialize() {
         this.kvConfigManager.load();
 
-        this.remotingServer = new NettyRemotingServer(this.nettyServerConfig, this.brokderHouseKeepingService);
+        this.remotingServer = new NettyRemotingServer(this.nettyServerConfig, this.brokerHousekeepingService);
 
         this.remotingExecutor = Executors.newFixedThreadPool(nettyServerConfig.getServerWorkerThreads(),
                 new ThreadFactoryImpl("RemotingExecutorThread_"));
@@ -54,7 +56,7 @@ public class NamesrvController {
             public void run() {
                 NamesrvController.this.routeInfoManager.scanNotActiveBroker();
             }
-        }, 5, 10 , TimeUnit.SECONDS);
+        }, 5, 10, TimeUnit.SECONDS);
 
         this.scheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
             @Override

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 
-public class NettyEncoder extends MessageToByteEncoder<RemotingCommand>{
+public class NettyEncoder extends MessageToByteEncoder<RemotingCommand> {
     private static final Logger logger = LoggerFactory.getLogger(NettyEncoder.class);
 
     @Override

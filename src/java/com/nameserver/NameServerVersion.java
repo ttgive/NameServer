@@ -10,8 +10,7 @@ public class NameServerVersion {
         try {
             Version v = Version.values()[value];
             return v.name();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
 
         return "HigherVersion";

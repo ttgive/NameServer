@@ -76,7 +76,7 @@ public class NamesrvStartup {
 
                     NamesrvUtil.properties2Object(properties, namesrvConfig);
                     NamesrvUtil.properties2Object(properties, nettyServerConfig);
-                    System.out.println("load config properties file OK, " +file);
+                    System.out.println("load config properties file OK, " + file);
                     in.close();
                 }
             }
@@ -116,6 +116,7 @@ public class NamesrvStartup {
                     new Runnable() {
                         private volatile boolean hasShutdown = false;
                         private AtomicInteger shutdownTimes = new AtomicInteger(0);
+
                         @Override
                         public void run() {
                             synchronized (this) {
@@ -137,14 +138,13 @@ public class NamesrvStartup {
             System.out.println(tip);
 
             return controller;
-        }  catch (Throwable e) {
+        } catch (Throwable e) {
             e.printStackTrace();
             System.exit(-1);
         }
 
         return null;
     }
-
 
 
 }
